@@ -1,0 +1,24 @@
+训练：
+1、准备好数据集  
+     放在VOCdevkit\voc2007/Annotations/ 标签文件      与       VOCdevkit\voc2007/JPEGimage /    图片
+2、运行VOCdevkit\voc2007/voc2yolo4.py    
+     重新生成VOCdevkit/ImageSet\Main/   test.txt      train.txt (指向图片与标签文件)     trainval.txt     val.txt
+3、将voc_annotations.py中的 classes[] 改为自己的组 
+     运行voc_annotations.py，重新生成2007_test.txt    2007_train.txt（包含了图片绝对路径，位置信息，类）    2007_val.txt
+4、在train.py文件中根据自己电脑配置修改 input_shape 大小；
+         Cosine_lr 是否用余弦退火衰减；
+         mosaic 是否使用马赛克增强方法；
+         Cuda：是否使用Cuda；
+         smooth_label：平滑标签可0/0.01/0.001
+         classes_path = '   ' 指向自己的model_data/new_classes.txt
+         运行train.py  显示loss逐渐下降收敛
+
+
+预测：
+1、修改yolo.py中的 "model_path": ' ' 指向logs/下训练好的权值文件；
+                               "classes_path": ' ' 指向要分的类的model_data/new_classes.txt
+      根据电脑配置修改 "model_image_size":(  ) 输入网络中图片的大小（416,416,3）~（608,608,3）
+      "confidence": 影响图片中物体置信度可设0.2/0.3/0.7
+      "cuda":是否有显卡，若用CPU改为False
+       运行predict.py进行预测。
+ 
